@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Statistics;
 namespace TestTask
 {
@@ -6,7 +7,11 @@ namespace TestTask
     {
         static void Main(string[] args)
         {
-            MovingAverage.getMovingAverage();
+            List<float> list = MovingAverage.getMovingAverage(5);
+            foreach(float item in list)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }

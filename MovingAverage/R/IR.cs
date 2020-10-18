@@ -6,6 +6,6 @@ namespace Statistics
 {
     public interface IR
     {
-        byte GetData();
+        byte Value { get; }
     }
 }

@@ -7,15 +7,17 @@ namespace Statistics.R
 {
     class R3: IR
     {
-        private byte data;
+        private byte value;
+        public byte Value
+        {
+            get
+            {
+                return value;
+            }
+        }
         public R3(List<byte> inputList)
         {
-            data = inputList.Max();
-        }
-
-        public byte GetData()
-        {
-            return data;
+            value = inputList.Max();
         }
     }
 }

@@ -1,47 +1,52 @@
 ﻿using Statistics.R;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Statistics
 {
     public static class MovingAverage
     {
-        private static List<IR> getR()
+
+        public static List<float> getMovingAverage(int window)
         {
-            List<byte[]> list = Data.GetFileData();
-            List<IR> output = new List<IR>();
-            foreach(byte[] data in list)
+            if(window % 2 == 0 && window >= 2)
             {
-                List<byte> row = new List<byte>(data);
-                byte key = row[0];
-                row.RemoveAt(0);
-                switch ((TypeR)key)
+                throw new ArgumentException("the window must be odd");
+            }
+            ContainerR container = new ContainerR();
+            List<float> output = new List<float>();
+            int i, leftRange, rightRange;
+            float result, halfWindow, sizeWindow = 1, previousWindow;
+            halfWindow = (window - 1) / 2;
+            output.Add(container.Rs[0].Value);
+            for(i = 1; i < container.Rs.Count; i++)
+            {
+                if(i <= halfWindow)
                 {
-                    case TypeR.R1:
-                        output.Add(new R1(row));
-                        break;
-                    case TypeR.R2:
-                        output.Add(new R2(row));
-                        break;
-                    case TypeR.R3:
-                        output.Add(new R3(row));
-                        break;
-                    case TypeR.R4:
-                        output.Add(new R4(row));
-                        break;
-
+                    previousWindow = sizeWindow;
+                    rightRange = i * 2;
+                    sizeWindow = rightRange + 1;
+                    result = previousWindow * output[i - 1]/ sizeWindow + container.Rs[rightRange - 1].Value / sizeWindow + container.Rs[rightRange].Value / sizeWindow;
                 }
+                else if(i + halfWindow >= container.Rs.Count)
+                {
+                    previousWindow = sizeWindow;
+                    leftRange = i - container.Rs.Count + 1 + i;
+                    rightRange = container.Rs.Count - 1;
+                    sizeWindow = rightRange - leftRange + 1;
+                    result = (previousWindow * output[i - 1]) / sizeWindow - container.Rs[leftRange - 1].Value / sizeWindow - container.Rs[leftRange - 2].Value / sizeWindow;
+                }
+                else{
+                    leftRange = i - (int)halfWindow;
+                    rightRange = i + (int)halfWindow;
+                    sizeWindow = window;
+                    result = output[i - 1] - container.Rs[leftRange - 1].Value / sizeWindow + container.Rs[rightRange].Value / sizeWindow;
+                }
+                output.Add(result); 
             }
-            return output;
-        }
 
-        public static void getMovingAverage()
-        {
-            List<IR> rs = getR();
-            foreach(IR r in rs)
-            {
-                Console.WriteLine(r.GetData());
-            }
+            return output;
         }
     }
 }

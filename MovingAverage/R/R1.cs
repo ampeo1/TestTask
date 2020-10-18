@@ -7,15 +7,17 @@ namespace Statistics.R
 {
     internal class R1: IR
     {
-        private byte data;
+        private byte value;
+        public byte Value
+        {
+            get
+            {
+                return value;
+            }
+        }
         public R1(List<byte> input)
         {
-            data = (byte)(input.Sum(x => x) % 255);
-        }
-
-        public byte GetData()
-        {
-            return data;
+            value = (byte)(input.Sum(x => x) % 255);
         }
       
     }

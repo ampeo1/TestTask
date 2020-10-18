@@ -7,7 +7,14 @@ namespace Statistics.R
 {
     class R2: IR
     {
-        private byte data;
+        private byte value;
+        public byte Value
+        {
+            get
+            {
+                return value;
+            }
+        }
         public R2(List<byte> inputList)
         {
             int result = 1;
@@ -15,12 +22,7 @@ namespace Statistics.R
             {
                 result *= input;
             }
-            data = (byte)(result % 255);
-        }
-
-        public byte GetData()
-        {
-            return data;
+            value = (byte)(result % 255);
         }
 
     }

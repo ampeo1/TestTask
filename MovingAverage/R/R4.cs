@@ -7,15 +7,17 @@ namespace Statistics.R
 {
     class R4: IR
     {
-        private byte data;
+        private byte value;
+        public byte Value
+        {
+            get
+            {
+                return value;
+            }
+        }
         public R4(List<byte> inputList)
         {
-            data = inputList.Min();
-        }
-
-        public byte GetData()
-        {
-            return data;
+            value = inputList.Min();
         }
     }
 }
