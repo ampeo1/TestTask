@@ -23,16 +23,16 @@ namespace Statistics
             float result, halfWindow, sizeWindow = 1, previousWindow;
             halfWindow = (window - 1) / 2;
             output.Add(container.Rs[0].Value);
-            for(i = 1; i < container.Rs.Count; i++)
+            for(i = 1; i < container.Rs.Count; i++) // делал через рекуррентное соотношение
             {
-                if(i <= halfWindow)
+                if(i <= halfWindow) //если у нас индекс меньше половины окна, значит мы находимся в начале массива
                 {
                     previousWindow = sizeWindow;
                     rightRange = i * 2;
                     sizeWindow = rightRange + 1;
                     result = previousWindow * output[i - 1]/ sizeWindow + container.Rs[rightRange - 1].Value / sizeWindow + container.Rs[rightRange].Value / sizeWindow;
                 }
-                else if(i + halfWindow >= container.Rs.Count)
+                else if(i + halfWindow >= container.Rs.Count) //значит мы подходим к концу массива и надо уменьшить окно
                 {
                     previousWindow = sizeWindow;
                     leftRange = i - container.Rs.Count + 1 + i;
@@ -40,7 +40,7 @@ namespace Statistics
                     sizeWindow = rightRange - leftRange + 1;
                     result = (previousWindow * output[i - 1]) / sizeWindow - container.Rs[leftRange - 1].Value / sizeWindow - container.Rs[leftRange - 2].Value / sizeWindow;
                 }
-                else{
+                else{ // в середине массива 
                     leftRange = i - (int)halfWindow;
                     rightRange = i + (int)halfWindow;
                     sizeWindow = window;
