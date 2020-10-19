@@ -14,10 +14,18 @@ namespace Statistics
          * 2. Строку конвертируем в массив byte
          * 3. Повторяем 1 2 пока не дойдём до конца файла
          */
-        public static List<byte[]> GetFileData()
+        public static List<byte[]> GetFileData(string path, string nameFile)
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory() + "//TestData");
-            FileInfo fileInfo = directoryInfo.GetFiles("test.txt").First();
+            DirectoryInfo directoryInfo = new DirectoryInfo(path);
+            FileInfo fileInfo;
+            try
+            {
+                fileInfo = directoryInfo.GetFiles(nameFile).First();
+            }
+            catch(InvalidOperationException ex)
+            {
+                return new List<byte[]>();
+            }
             List<byte[]> data = new List<byte[]>();
             using (StreamReader fstream = new StreamReader(fileInfo.FullName))
             {
@@ -34,5 +42,11 @@ namespace Statistics
             }
             return data;
         }
+
+        public static string getDefaultPath()
+        {
+            return Directory.GetCurrentDirectory() + @"\TestData";
+        }
+
     }
 }

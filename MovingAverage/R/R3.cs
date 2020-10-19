@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Statistics.R
 {
-    class R3: IR
+    public class R3: IR
     {
         private byte value;
         public byte Value
@@ -18,6 +18,11 @@ namespace Statistics.R
         public R3(List<byte> inputList)
         {
             value = inputList.Max();
+        }
+
+        public R3(byte value)
+        {
+            this.value = value;
         }
     }
 }

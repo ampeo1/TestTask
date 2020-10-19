@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Statistics.R
 {
-    class R4: IR
+    public class R4: IR
     {
         private byte value;
         public byte Value

@@ -8,13 +8,16 @@ namespace Statistics
     public static class MovingAverage
     {
 
-        public static List<float> getMovingAverage(int window)
+        public static List<float> getMovingAverage(int window, ContainerR container)
         {
-            if(window % 2 == 0 && window >= 2)
+            if(window % 2 == 0 || window < 3 || window > 1000001)
             {
-                throw new ArgumentException("the window must be odd");
+                throw new ArgumentException("1.The window must be odd \n 2.Should belong [3, 1000001]");
             }
-            ContainerR container = new ContainerR();
+            if(container.Rs.Count == 0)
+            {
+                throw new ArgumentException("Container is empty");
+            }
             List<float> output = new List<float>();
             int i, leftRange, rightRange;
             float result, halfWindow, sizeWindow = 1, previousWindow;

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Statistics.R
 {
-    class R2: IR
+    public class R2: IR
     {
         private byte value;
         public byte Value

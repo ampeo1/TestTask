@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Statistics.R
 {
-    class ContainerR
+    public class ContainerR
     {
         private List<IR> rs = new List<IR>();
         public List<IR> Rs 
@@ -13,11 +13,14 @@ namespace Statistics.R
             {
                 return rs;
             }
+            set
+            {
+                rs = value;
+            }
         }
 
-        public ContainerR()
+        public ContainerR(List<byte[]> list)
         {
-            List<byte[]> list = Data.GetFileData();
             foreach (byte[] data in list)
             {
                 List<byte> row = new List<byte>(data);
@@ -42,5 +45,8 @@ namespace Statistics.R
             }
         }
 
+        public ContainerR()
+        {
+        }
     }
 }
